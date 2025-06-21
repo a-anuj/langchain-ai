@@ -1,13 +1,13 @@
 import streamlit as st
 import os
-from langchain_huggingface import HuggingFaceEndpoint
+from langchain_openai import OpenAI
 
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 def load_answer(question):
-    llm = HuggingFaceEndpoint(
-        model="mistralai/Mistral-7B-Instruct-v0.3",
-        temperature=0.7  # Ensure temperature is positive
+    llm = OpenAI(
+        model_name="gpt-3.5-turbo-instruct",
+        temperature=0  # Ensure temperature is positive
     )
     response = llm.invoke(question)
     return response
@@ -17,7 +17,7 @@ st.header("Langchain-Q/A App")
 
 def get_text():
     input_text = st.text_input("You: ", key="input")
-    return input_text.strip()  # Remove unnecessary spaces
+    return input_text
 
 user_input = get_text()
 submit = st.button("Generate")
